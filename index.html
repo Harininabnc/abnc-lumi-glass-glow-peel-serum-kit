@@ -30,7 +30,7 @@
       z-index: 1;
     }
 
-    /* 滚动进入动画 (JS触发) */
+    /* 滚动进入动画 */
     .fade-up {
       opacity: 0;
       transform: translateY(30px);
@@ -113,7 +113,6 @@
       height: auto;
       border-radius: 30px;
       box-shadow: 0 15px 30px -10px rgba(0,0,0,0.15);
-      /* 产品图呼吸动效 */
       animation: breathe 4s infinite alternate ease-in-out;
     }
     @media (min-width: 768px) { .hero-img img { width: 90%; max-width: 400px; } }
@@ -156,7 +155,6 @@
       flex-direction: column;
       transition: all 0.3s ease;
     }
-    /* 卡片悬浮动效 */
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 30px -5px rgba(177, 68, 60, 0.15);
@@ -194,7 +192,7 @@
     @keyframes slide-down { 0% { transform: translateY(-5px) rotate(90deg); opacity: 0.7; } 50% { transform: translateY(5px) rotate(90deg); opacity: 1; } 100% { transform: translateY(-5px) rotate(90deg); opacity: 0.7; } }
     @keyframes slide-right { 0% { transform: translateX(-5px); opacity: 0.7; } 50% { transform: translateX(5px); opacity: 1; } 100% { transform: translateX(-5px); opacity: 0.7; } }
 
-    /* ================= 成分区 (含轮播) ================= */
+    /* ================= 成分区 ================= */
     .ingredients-wrapper {
       display: flex;
       flex-direction: column;
@@ -205,37 +203,21 @@
       .ingredients-wrapper { flex-direction: row; align-items: flex-start; }
     }
 
-    /* 左侧图片轮播 */
+    /* 左侧主图 (固定展示 glow-skin) */
     .ingredients-visual {
       width: 100%;
       border-radius: 20px;
       overflow: hidden;
-      position: relative;
       box-shadow: 0 15px 30px -10px rgba(0,0,0,0.1);
-      background: #fce9e5;
     }
     @media (min-width: 992px) {
       .ingredients-visual { flex: 1; position: sticky; top: 2rem; }
     }
-
-    .carousel {
-      display: flex;
-      width: 400%; /* 4张图 */
-      animation: slide 16s infinite; /* 循环播放 */
-    }
-    .carousel img {
-      width: 25%;
+    .ingredients-visual img {
+      width: 100%;
       height: auto;
-      object-fit: cover;
       display: block;
-    }
-
-    @keyframes slide {
-      0%, 20% { transform: translateX(0); }
-      25%, 45% { transform: translateX(-25%); }
-      50%, 70% { transform: translateX(-50%); }
-      75%, 95% { transform: translateX(-75%); }
-      100% { transform: translateX(0); }
+      object-fit: cover;
     }
 
     /* 右侧成分列表 */
@@ -267,7 +249,6 @@
       transform: translateX(5px);
       box-shadow: 0 8px 20px rgba(177, 68, 60, 0.1);
     }
-    /* 小红点脉冲动效 */
     .ing-core::before {
       content: '';
       position: absolute;
@@ -311,6 +292,21 @@
     }
     .ing-sub h5 { font-size: 0.95rem; color: #5e3a36; margin-bottom: 0.2rem; }
     .ing-sub p { font-size: 0.85rem; color: #777; }
+
+    /* 🟢 新增：气泡机制原理图区域 */
+    .mechanism-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      border: 1px solid #f0e4e0;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+      transition: transform 0.3s;
+    }
+    .mechanism-box:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(177,68,60,0.08); }
+    .mechanism-box h4 { font-size: 1.1rem; color: #b1443c; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; }
+    .mechanism-box img { width: 100%; max-width: 400px; border-radius: 12px; margin: 0 auto; display: block; }
 
     /* ================= 数据展示 ================= */
     .result-card {
@@ -412,7 +408,6 @@
         <a href="https://shop.tiktok.com/us/store/abnc-us-store/8656968372695634186" target="_blank" class="btn-primary">Shop / Request Sample →</a>
       </div>
       <div class="hero-img fade-up">
-        <!-- 使用你上传的第4张图作为主图 -->
         <img src="img/ABNC LUMI GLASS GLOW PEEL BUBBLE SERUM.png" alt="ABN°C Glow Peel Bubble Serum">
       </div>
     </div>
@@ -468,23 +463,16 @@
       </div>
     </div>
 
-    <!-- 🟢 全新成分区 (含4图自动轮播) -->
+    <!-- 🟢 全新成分区 -->
     <h2 class="section-title fade-up">How Ingredients Work</h2>
     <div class="ingredients-wrapper fade-up">
       
-      <!-- 左侧/上方：4图自动轮播 -->
+      <!-- 左侧/上方：固定展示上脸效果图 -->
       <div class="ingredients-visual">
-        <div class="carousel">
-          <!-- 完全按照你提供的文件名匹配 -->
-          <img src="img/bubble-effect.jpg" alt="Bubble Effect">
-          <img src="img/bubble-reset-system.jpg" alt="Bubble Reset System">
-          <img src="img/glow-skin.png" alt="Glow Skin">
-          <!-- 最后一个文件带有空格，照常引入（建议在Github里改成product.png会更安全） -->
-          <img src="img/ABNC LUMI GLASS GLOW PEEL BUBBLE SERUM.png" alt="Product">
-        </div>
+        <img src="img/glow-skin.png" alt="Glow Skin Result">
       </div>
 
-      <!-- 右侧/下方：成分列表 -->
+      <!-- 右侧/下方：成分列表 + 机制图 -->
       <div class="ingredients-content">
         <div class="ingredient-tier">
           <h3 style="font-size: 1rem; color: #888; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">Key Ingredients</h3>
@@ -517,6 +505,13 @@
             <h5>Panthenol</h5>
             <p>Provides ample moisture and soothes the skin barrier.</p>
           </div>
+        </div>
+
+        <!-- 🟢 新增：气泡机制原理图，放在成分列表下方 -->
+        <div class="mechanism-box fade-up">
+          <h4>Bubble Reset System™</h4>
+          <!-- 使用你提供的文件名 -->
+          <img src="img/bubble-reset-system.jpg" alt="Bubble Reset System Mechanism">
         </div>
       </div>
     </div>
@@ -594,7 +589,7 @@
   </div>
 
   <script>
-    // 滚动动画 JS (触发 fade-up 动效)
+    // 滚动动画 JS
     document.addEventListener("DOMContentLoaded", function() {
       const fadeElements = document.querySelectorAll('.fade-up');
       
