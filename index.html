@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ABN°C LUMI GLASS | Glow Peel Bubble Serum</title>
+  <style>
+    /* ================= 基础重置 ================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #fffbf8;
+      color: #201e1c;
+      line-height: 1.4;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1.2rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 滚动进入动画 (JS触发) */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ================= HERO 区域 ================= */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      padding: 1rem 0;
+    }
+    @media (min-width: 768px) {
+      .hero { flex-direction: row; align-items: center; padding: 2rem 0; }
+    }
+
+    .hero-text { flex: 1; }
+    .hero-text h1 {
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #b1443c, #e77b73, #b1443c);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 4s linear infinite;
+    }
+    @keyframes shine { to { background-position: 200% center; } }
+
+    .hero-text .tagline {
+      font-size: 1.1rem;
+      font-weight: 700;
+      background: #fce9e5;
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      color: #962f27;
+    }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: #3a3532;
+      max-width: 500px;
+    }
+
+    .btn-primary {
+      background: #b1443c;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 8px 20px rgba(177, 68, 60, 0.25);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    .btn-primary:hover { background: #8f322b; transform: translateY(-3px); box-shadow: 0 12px 25px rgba(177, 68, 60, 0.35); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .hero-img {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    .hero-img img {
+      width: 70%;
+      max-width: 300px;
+      height: auto;
+      border-radius: 30px;
+      box-shadow: 0 15px 30px -10px rgba(0,0,0,0.15);
+      /* 产品图呼吸动效 */
+      animation: breathe 4s infinite alternate ease-in-out;
+    }
+    @media (min-width: 768px) { .hero-img img { width: 90%; max-width: 400px; } }
+    @keyframes breathe {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-10px) scale(1.02); }
+    }
+
+    /* ================= 标题 ================= */
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 2.5rem 0 1.2rem;
+      color: #2d2a27;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    @media (min-width: 768px) { .section-title { font-size: 1.8rem; margin: 3rem 0 1.5rem; } }
+    .section-title::before {
+      content: ''; display: block; width: 6px; height: 24px; background: #b1443c; border-radius: 10px;
+    }
+
+    /* ================= 核心卖点卡片 ================= */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; } }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px -5px rgba(0,0,0,0.05);
+      border: 1px solid #f0e4e0;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+    /* 卡片悬浮动效 */
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px -5px rgba(177, 68, 60, 0.15);
+      border-color: #fce9e5;
+    }
+    .card .icon {
+      display: flex; align-items: center; justify-content: center;
+      width: 50px; height: 50px;
+      background: #fef6f4; border-radius: 12px;
+      margin-bottom: 1rem;
+      transition: transform 0.3s;
+    }
+    .card:hover .icon { transform: scale(1.1) rotate(5deg); }
+    .card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .card p { font-size: 0.95rem; color: #5e5a56; }
+
+    /* ================= 质地转变视觉 ================= */
+    .transfo-visual {
+      background: linear-gradient(135deg, #fdfbfb 0%, #f5ebe7 100%);
+      border-radius: 24px;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    @media (min-width: 768px) { .transfo-visual { flex-direction: row; justify-content: center; padding: 2rem; gap: 2rem; } }
+    .transfo-step { display: flex; flex-direction: column; align-items: center; text-align: center; transition: transform 0.3s; }
+    .transfo-step:hover { transform: scale(1.05); }
+    .transfo-step .step-icon { font-size: 2.5rem; margin-bottom: 0.5rem; animation: pulse-icon 2s infinite; }
+    @keyframes pulse-icon { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    .transfo-step .label { font-weight: 700; font-size: 1rem; background: white; padding: 0.3rem 1rem; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .arrow { font-size: 1.5rem; color: #b1443c; transform: rotate(90deg); animation: slide-down 1.5s infinite; }
+    @media (min-width: 768px) { .arrow { transform: rotate(0deg); animation: slide-right 1.5s infinite; } }
+    @keyframes slide-down { 0% { transform: translateY(-5px) rotate(90deg); opacity: 0.7; } 50% { transform: translateY(5px) rotate(90deg); opacity: 1; } 100% { transform: translateY(-5px) rotate(90deg); opacity: 0.7; } }
+    @keyframes slide-right { 0% { transform: translateX(-5px); opacity: 0.7; } 50% { transform: translateX(5px); opacity: 1; } 100% { transform: translateX(-5px); opacity: 0.7; } }
+
+    /* ================= 成分区 (含轮播) ================= */
+    .ingredients-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    @media (min-width: 992px) {
+      .ingredients-wrapper { flex-direction: row; align-items: flex-start; }
+    }
+
+    /* 左侧图片轮播 */
+    .ingredients-visual {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 15px 30px -10px rgba(0,0,0,0.1);
+      background: #fce9e5;
+    }
+    @media (min-width: 992px) {
+      .ingredients-visual { flex: 1; position: sticky; top: 2rem; }
+    }
+
+    .carousel {
+      display: flex;
+      width: 400%; /* 4张图 */
+      animation: slide 16s infinite; /* 循环播放 */
+    }
+    .carousel img {
+      width: 25%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+
+    @keyframes slide {
+      0%, 20% { transform: translateX(0); }
+      25%, 45% { transform: translateX(-25%); }
+      50%, 70% { transform: translateX(-50%); }
+      75%, 95% { transform: translateX(-75%); }
+      100% { transform: translateX(0); }
+    }
+
+    /* 右侧成分列表 */
+    .ingredients-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    @media (min-width: 992px) { .ingredients-content { flex: 1.5; } }
+
+    .ingredient-tier {
+      position: relative;
+      padding-left: 1.5rem;
+      border-left: 2px solid #f0e4e0;
+    }
+
+    .ing-core {
+      background: white;
+      border-radius: 16px;
+      padding: 1.2rem;
+      border: 1px solid #fce9e5;
+      box-shadow: 0 5px 15px rgba(177, 68, 60, 0.04);
+      position: relative;
+      margin-bottom: 0.8rem;
+      transition: all 0.3s ease;
+    }
+    .ing-core:hover {
+      transform: translateX(5px);
+      box-shadow: 0 8px 20px rgba(177, 68, 60, 0.1);
+    }
+    /* 小红点脉冲动效 */
+    .ing-core::before {
+      content: '';
+      position: absolute;
+      left: -1.85rem; top: 1.5rem;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #b1443c;
+      border: 3px solid #fffbf8;
+      animation: dotPulse 2s infinite;
+    }
+    @keyframes dotPulse {
+      0% { box-shadow: 0 0 0 0 rgba(177, 68, 60, 0.4); }
+      70% { box-shadow: 0 0 0 8px rgba(177, 68, 60, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(177, 68, 60, 0); }
+    }
+    .ing-core h4 { font-size: 1.1rem; color: #b1443c; margin-bottom: 0.4rem; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .ing-core p { font-size: 0.95rem; color: #3a3532; }
+
+    .patent-badge {
+      font-size: 0.6rem; background: #fce9e5; color: #b1443c;
+      padding: 2px 6px; border-radius: 4px; font-weight: 800;
+    }
+
+    .ing-sub {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid #f0e4e0;
+      margin-bottom: 0.6rem;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .ing-sub:hover { background: white; transform: translateX(5px); }
+    .ing-sub::before {
+      content: '';
+      position: absolute;
+      left: -1.75rem; top: 1.2rem;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #d4c5c2;
+    }
+    .ing-sub h5 { font-size: 0.95rem; color: #5e3a36; margin-bottom: 0.2rem; }
+    .ing-sub p { font-size: 0.85rem; color: #777; }
+
+    /* ================= 数据展示 ================= */
+    .result-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      border: 1px solid #f0e4e0;
+      transition: all 0.3s;
+    }
+    .result-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(177, 68, 60, 0.1); border-color: #b1443c; }
+    .result-number { font-size: 2.5rem; font-weight: 900; color: #b1443c; line-height: 1; margin-bottom: 0.5rem; transition: transform 0.3s; }
+    .result-card:hover .result-number { transform: scale(1.1); }
+    .result-number.dark { color: #201e1c; }
+
+    /* ================= 达人脚本卡片 ================= */
+    .script-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.2rem;
+      border-left: 5px solid #b1443c;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+    }
+    .script-card:hover { transform: scale(1.01); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+    .script-badge {
+      display: inline-block; background: #fce9e5; padding: 0.2rem 0.6rem;
+      border-radius: 20px; font-size: 0.75rem; font-weight: 800;
+      color: #b1443c; margin-bottom: 0.6rem; text-transform: uppercase;
+    }
+    .script-card h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .script-card p { font-size: 0.9rem; color: #4a4642; margin-bottom: 0.4rem; }
+    .script-card .hook { font-weight: 600; background: #fffbf8; border: 1px dashed #e0cfca; padding: 0.1rem 0.4rem; border-radius: 6px; }
+
+    /* ================= 达人联系区 ================= */
+    .creator-contact {
+      background: linear-gradient(135deg, #fff 0%, #fef6f4 100%);
+      border-radius: 24px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      border: 1px solid #fce9e5;
+      transition: all 0.3s;
+    }
+    .creator-contact:hover { box-shadow: 0 15px 30px rgba(177, 68, 60, 0.08); }
+    @media (min-width: 768px) {
+      .creator-contact { flex-direction: row; justify-content: space-between; align-items: center; padding: 2.5rem 2rem; }
+    }
+    .creator-contact h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.3rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.6rem; }
+    .contact-links a { color: #b1443c; font-weight: 700; text-decoration: none; font-size: 0.95rem; transition: all 0.2s; display: inline-block; }
+    .contact-links a:hover { transform: translateX(5px); color: #8f322b; }
+
+    /* ================= 底部 CTA ================= */
+    .footer-cta {
+      background: #b1443c; color: white; text-align: center;
+      padding: 2rem 1.5rem; border-radius: 24px;
+      position: relative; overflow: hidden;
+    }
+    .footer-cta::before {
+      content: '';
+      position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      animation: rotateBg 10s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes rotateBg { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    .footer-cta h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 1rem; position: relative; z-index: 1; }
+    
+    .btn-light {
+      background: white; color: #b1443c; font-weight: 800;
+      padding: 0.8rem 2rem; border-radius: 50px; font-size: 1.1rem;
+      text-decoration: none; display: inline-block; margin-top: 1rem;
+      position: relative; z-index: 1;
+      animation: pulse-btn 2s infinite;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .btn-light:hover { background: #fef6f4; }
+    .btn-light:active { transform: scale(0.95); }
+    @keyframes pulse-btn {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+      70% { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-text fade-up">
+        <div class="tagline">✨ Foam → Gommage → Glass Skin</div>
+        <h1>Glow Peel Bubble Serum</h1>
+        <p>Pumps out as a soft foam. Massage it in — it transforms into a peeling gel that gently sweeps away dead skin for an instant glassy glow.</p>
+        <a href="https://shop.tiktok.com/us/store/abnc-us-store/8656968372695634186" target="_blank" class="btn-primary">Shop / Request Sample →</a>
+      </div>
+      <div class="hero-img fade-up">
+        <!-- 如果你有产品主图，可以替换这里的链接；如果没有，保留占位图或把这张图换成 images/product.png -->
+        <img src="https://placehold.co/600x600/ecdbd7/b1443c?text=ABN°C+Glow+Peel" alt="ABN°C Glow Peel Bubble Serum">
+      </div>
+    </div>
+
+    <!-- 3 CORE BENEFITS -->
+    <h2 class="section-title fade-up">Key Benefits</h2>
+    <div class="grid-3">
+      <div class="card fade-up">
+        <div class="icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#b1443c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="15" r="5"/><circle cx="16" cy="9" r="3"/><circle cx="18" cy="16" r="2"/><path d="M10 15l2 2"/>
+          </svg>
+        </div>
+        <h3>Foam-to-Gommage</h3>
+        <p>Soft bubbles melt into a peeling gel as you massage — lifting dead skin and pore debris without harsh scrubbing.</p>
+      </div>
+      <div class="card fade-up">
+        <div class="icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#b1443c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M5.6 18.4L18.4 5.6"/>
+          </svg>
+        </div>
+        <h3>Instant Radiance</h3>
+        <p>Glutathione + 2% Niacinamide + NAG brighten dullness immediately. Skin looks smooth and glassy after one wash.</p>
+      </div>
+      <div class="card fade-up">
+        <div class="icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#b1443c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Low-Irritation</h3>
+        <p>PHA + LHA gently exfoliate. Panthenol and hyaluronic acid soothe and hydrate — no tight feeling post-peel.</p>
+      </div>
+    </div>
+
+    <!-- TEXTURE TRANSFORMATION -->
+    <h2 class="section-title fade-up">Watch the Transform</h2>
+    <div class="transfo-visual fade-up">
+      <div class="transfo-step">
+        <div class="step-icon">☁️</div>
+        <div class="label">Soft Foam</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="transfo-step">
+        <div class="step-icon">🤲</div>
+        <div class="label">Massage</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="transfo-step">
+        <div class="step-icon">💎</div>
+        <div class="label">Glass Glow</div>
+      </div>
+    </div>
+
+    <!-- 🟢 全新成分区 (含4图自动轮播) -->
+    <h2 class="section-title fade-up">How Ingredients Work</h2>
+    <div class="ingredients-wrapper fade-up">
+      
+      <!-- 左侧/上方：4图自动轮播 -->
+      <div class="ingredients-visual">
+        <div class="carousel">
+          <!-- ⚠️ 请在 GitHub 仓库中创建 images 文件夹，并放入以下4张图 -->
+          <img src="images/bubble-effect.png" alt="Bubble Effect">
+          <img src="images/bubble-reset-system.png" alt="Bubble Reset System">
+          <img src="images/glow-skin.png" alt="Glow Skin">
+          <img src="images/product.png" alt="Product">
+        </div>
+      </div>
+
+      <!-- 右侧/下方：成分列表 -->
+      <div class="ingredients-content">
+        <div class="ingredient-tier">
+          <h3 style="font-size: 1rem; color: #888; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">Key Ingredients</h3>
+          
+          <div class="ing-core">
+            <h4>MELAZERO V2™ <span class="patent-badge">PATENTED</span></h4>
+            <p>Patented plant-derived brightener. Targets melanin to even out dull, uneven skin tone.</p>
+          </div>
+          <div class="ing-core">
+            <h4>Glutathione + Multi Vitamine</h4>
+            <p>Revitalizes natural radiance. Helps supply moisture and nutrients to cultivate a natural glow.</p>
+          </div>
+          <div class="ing-core">
+            <h4>Plant Exosome + PHA/LHA</h4>
+            <p>Exosomes care for fatigued skin. PHA & LHA gently dissolve dead skin cells without micro-tears.</p>
+          </div>
+        </div>
+
+        <div class="ingredient-tier" style="margin-top: 1rem;">
+          <h3 style="font-size: 1rem; color: #888; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">Sub Ingredients</h3>
+          <div class="ing-sub">
+            <h5>11 Type Multi-HA</h5>
+            <p>11 different sizes of hyaluronic acid densely fill and maintain a moist texture.</p>
+          </div>
+          <div class="ing-sub">
+            <h5>Copper Peptide</h5>
+            <p>Helps condition the skin to be full of vitality and elasticity.</p>
+          </div>
+          <div class="ing-sub">
+            <h5>Panthenol</h5>
+            <p>Provides ample moisture and soothes the skin barrier.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLINICAL SNAPSHOT -->
+    <h2 class="section-title fade-up">Real Results</h2>
+    <div class="grid-3">
+      <div class="result-card fade-up">
+        <div class="result-number">94%</div>
+        <p style="font-weight: 700; font-size: 0.9rem;">Dead Skin Removed</p>
+        <p style="font-size: 0.75rem; color: #777;">Instant smoothing effect*</p>
+      </div>
+      <div class="result-card fade-up">
+        <div class="result-number">98%</div>
+        <p style="font-weight: 700; font-size: 0.9rem;">Pore Impurities Reduced</p>
+        <p style="font-size: 0.75rem; color: #777;">Clinical study results*</p>
+      </div>
+      <div class="result-card fade-up">
+        <div class="result-number dark">0.00</div>
+        <p style="font-weight: 700; font-size: 0.9rem;">Irritation Score</p>
+        <p style="font-size: 0.75rem; color: #777;">Dermatologist-tested patch test</p>
+      </div>
+    </div>
+    <div style="font-size: 0.7rem; color: #999; text-align: center; margin-top: -1rem; margin-bottom: 2rem;" class="fade-up">
+      *Results based on clinical and consumer testing conducted by OATC Skin Clinical Trial Center (30 subjects).
+    </div>
+
+    <!-- TIKTOK SCRIPTS -->
+    <h2 class="section-title fade-up">Creator Scripts</h2>
+
+    <div class="script-card fade-up">
+      <div class="script-badge">Hook 1 · Main Pain Point</div>
+      <h4>"Is your makeup patchy because of a wall of dead skin?"</h4>
+      <p><span class="hook">🎥 Visual:</span> Show textured skin → apply foam → massage into gommage → rinse → smooth skin.</p>
+    </div>
+
+    <div class="script-card fade-up">
+      <div class="script-badge">Hook 2 · Result First</div>
+      <h4>"Look at this glow. No filter. Just one use."</h4>
+      <p><span class="hook">🎥 Visual:</span> Extreme close-up of glowing skin → cut to "before" with dull, rough patches.</p>
+    </div>
+
+    <div class="script-card fade-up">
+      <div class="script-badge">Hook 3 · Pre-Makeup Reset</div>
+      <h4>"My secret to a flawless base: this bubble peel before foundation."</h4>
+      <p><span class="hook">🎥 Visual:</span> Prep skin with serum → foam turns to gommage → rinse → apply foundation glides on perfectly.</p>
+    </div>
+
+    <div class="script-card fade-up">
+      <div class="script-badge">Hook 4 · Texture ASMR</div>
+      <h4>"Have you ever heard a foam turn into a peeling gel?"</h4>
+      <p><span class="hook">🎥 Visual:</span> Close-up pump of foam → massage on back of hand → gommage forms → rinse → glowing skin.</p>
+    </div>
+
+    <!-- CREATOR CONTACT -->
+    <div class="creator-contact fade-up">
+      <div>
+        <h3>📦 Creator? Request a Sample</h3>
+        <p style="font-size: 0.9rem; color: #666;">Apply via our TikTok Shop or reach out directly.</p>
+      </div>
+      <div class="contact-links">
+        <a href="https://shop.tiktok.com/us/store/abnc-us-store/8656968372695634186" target="_blank">🛍️ TikTok Shop — ABNC US Store</a>
+        <a href="https://abnc.com/" target="_blank">🌐 Brand Website: abnc.com</a>
+        <a href="mailto:Harin@abnc.com">✉️ Harin@abnc.com</a>
+        <a href="https://wa.me/821039657894" target="_blank">💬 WhatsApp: +82 010-3965-7894</a>
+      </div>
+    </div>
+
+    <!-- FINAL CTA -->
+    <div class="footer-cta fade-up" style="margin-top: 2rem;">
+      <h2>Ready for Glass Skin?</h2>
+      <a href="https://shop.tiktok.com/us/store/abnc-us-store/8656968372695634186" target="_blank" class="btn-light">Shop Now</a>
+    </div>
+
+  </div>
+
+  <script>
+    // 滚动动画 JS (触发 fade-up 动效)
+    document.addEventListener("DOMContentLoaded", function() {
+      const fadeElements = document.querySelectorAll('.fade-up');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+      fadeElements.forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
